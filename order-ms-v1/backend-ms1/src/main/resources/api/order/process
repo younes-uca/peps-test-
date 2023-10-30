@@ -7,3 +7,10 @@ curl --location 'http://localhost:8036/api/admin/orderBoutique/process/save' \
         {"price" : 5,"quantity" : 3,  "product":{"id":2}}
     ]
 }'
+
+
+curl --location 'http://localhost:8036/api/admin/orderBoutique/process/delete' \
+--header 'Content-Type: application/json' \
+--data '{
+    "reference":"order-5"
+}'
