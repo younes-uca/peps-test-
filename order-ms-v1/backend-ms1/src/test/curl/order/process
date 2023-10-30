@@ -14,3 +14,8 @@ curl --location 'http://localhost:8036/api/admin/orderBoutique/process/delete' \
 --data '{
     "reference":"order-5"
 }'
+
+
+curl --location 'http://localhost:8036/api/admin/orderBoutique/'
+
+curl --location 'http://localhost:8036/api/admin/orderBoutique/id/3'
