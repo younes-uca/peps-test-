@@ -1,0 +1,108 @@
+{
+    "from-to": "Elements from {first} to {last} (total {totalRecords})",
+    "new" : "Nouveau",
+    "search": "Chercher",
+    "export": "Exporter",
+    "validate": "Validater",
+    "search": "Chercher...",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "save": "Sauvgarder",
+    "next": "Suivant",
+    "yes": "Oui",
+    "no": "Non",
+    "actions": "Actions",
+    "confirm": "Confirmer",
+    "creation": "Creation",
+    "list": "Liste",
+
+
+    "product":{
+        "libelle": "Libelle",
+        "code": "Code",
+        "productCategory": "Product category",
+        "productCategoryPlaceHolder": "Select a Product category",
+        "productCategoryPlaceHolderFilter": "Search by Product category",
+        "product": "Product",
+        "tabPan": "Product",
+        "header": "Liste des products",
+        "deleteProductConfirmationMessage": "Voulez vous vraiment supprimer product",
+        "deleteProductsConfirmationMessage": "Voulez vous vraiment supprimer les elments selectionnes"
+
+    },
+
+
+    "orderStatus":{
+        "libelle": "Libelle",
+        "code": "Code",
+        "style": "Style",
+        "orderStatus": "Order status",
+        "tabPan": "Order status",
+        "header": "Liste des order status",
+        "deleteOrderStatusConfirmationMessage": "Voulez vous vraiment supprimer order status",
+        "deleteOrderStatussConfirmationMessage": "Voulez vous vraiment supprimer les elments selectionnes"
+
+    },
+
+
+    "productCategory":{
+        "libelle": "Libelle",
+        "code": "Code",
+        "productCategory": "Product category",
+        "tabPan": "Product category",
+        "header": "Liste des product categorys",
+        "deleteProductCategoryConfirmationMessage": "Voulez vous vraiment supprimer product category",
+        "deleteProductCategorysConfirmationMessage": "Voulez vous vraiment supprimer les elments selectionnes"
+
+    },
+
+
+    "orderBoutique":{
+        "reference": "Reference",
+        "orderDate": "Order date",
+        "orderDateMin": "Order date Min",
+        "orderDateMax": "Order date Max",
+        "total": "Total",
+        "totalMin": "Total Min",
+        "totalMax": "Total Max",
+        "orderLines": "Order lines",
+        "orderStatus": "Order status",
+        "orderStatusPlaceHolder": "Select a Order status",
+        "orderStatusPlaceHolderFilter": "Search by Order status",
+        "orderBoutique": "Order boutique",
+        "tabPan": "Order boutique",
+        "header": "Liste des order boutiques",
+        "deleteOrderBoutiqueConfirmationMessage": "Voulez vous vraiment supprimer order boutique",
+        "deleteOrderBoutiquesConfirmationMessage": "Voulez vous vraiment supprimer les elments selectionnes"
+
+    },
+
+
+    "orderLine":{
+        "price": "Price",
+        "priceMin": "Price Min",
+        "priceMax": "Price Max",
+        "quantity": "Quantity",
+        "quantityMin": "Quantity Min",
+        "quantityMax": "Quantity Max",
+        "quantityReceived": "Quantity received",
+        "quantityReceivedMin": "Quantity received Min",
+        "quantityReceivedMax": "Quantity received Max",
+        "product": "Product",
+        "productPlaceHolder": "Select a Product",
+        "productPlaceHolderFilter": "Search by Product",
+        "orderBoutique": "Order boutique",
+        "orderBoutiquePlaceHolder": "Select a Order boutique",
+        "orderBoutiquePlaceHolderFilter": "Search by Order boutique",
+        "orderLine": "Order line",
+        "tabPan": "Order line",
+        "header": "Liste des order lines",
+        "deleteOrderLineConfirmationMessage": "Voulez vous vraiment supprimer order line",
+        "deleteOrderLinesConfirmationMessage": "Voulez vous vraiment supprimer les elments selectionnes"
+
+    },
+
+"appName": "GED"
+}
+
+
