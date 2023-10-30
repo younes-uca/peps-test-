@@ -50,8 +50,9 @@ public class OrderBoutiqueRestAdmin  extends AbstractController<OrderBoutique, O
         return new ResponseEntity<>(result, result.getStatus());
     }
     @Operation(summary = "delete a orderBoutique")
-    @PostMapping("process/delete")
-    public ResponseEntity<Result<OrderBoutiqueDeleteAdminInput,OrderBoutiqueDeleteAdminOutput, OrderBoutique>> deleteProcess(@RequestBody OrderBoutiqueDeleteAdminInput input) throws Exception {
+    @DeleteMapping("process/delete/reference/{reference}")
+    public ResponseEntity<Result<OrderBoutiqueDeleteAdminInput,OrderBoutiqueDeleteAdminOutput, OrderBoutique>> deleteProcess(@PathVariable String reference) throws Exception {
+        OrderBoutiqueDeleteAdminInput input = new OrderBoutiqueDeleteAdminInput(reference);
         Result<OrderBoutiqueDeleteAdminInput, OrderBoutiqueDeleteAdminOutput, OrderBoutique> result = orderBoutiqueDeleteAdminProcess.execute(input);
         return new ResponseEntity<>(result, result.getStatus());
     }

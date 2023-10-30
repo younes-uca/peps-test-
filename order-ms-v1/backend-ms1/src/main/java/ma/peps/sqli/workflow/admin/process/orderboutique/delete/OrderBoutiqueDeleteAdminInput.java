@@ -23,6 +23,13 @@ public class OrderBoutiqueDeleteAdminInput extends AbstractProcessInput {
     private List<OrderLineDto> orderLines;
 
 
+    public OrderBoutiqueDeleteAdminInput() {
+    }
+
+    public OrderBoutiqueDeleteAdminInput(String reference) {
+        this.reference = reference;
+    }
+
     @Log
     public String getReference() {
         return this.reference;

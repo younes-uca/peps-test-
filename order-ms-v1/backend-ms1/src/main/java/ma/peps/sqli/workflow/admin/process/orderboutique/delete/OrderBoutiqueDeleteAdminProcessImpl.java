@@ -6,6 +6,7 @@ import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.workflow.admin.process.orderboutique.OrderBoutiqueConstant;
 import ma.peps.sqli.zynerator.process.AbstractProcessImpl;
 import ma.peps.sqli.zynerator.process.Result;
+import org.springframework.http.HttpStatus;
 
 public class OrderBoutiqueDeleteAdminProcessImpl extends AbstractProcessImpl<OrderBoutiqueDeleteAdminInput, OrderBoutiqueDeleteAdminOutput, OrderBoutique, OrderBoutiqueDeleteAdminConverter> implements OrderBoutiqueDeleteAdminProcess {
 
@@ -32,7 +33,7 @@ public class OrderBoutiqueDeleteAdminProcessImpl extends AbstractProcessImpl<Ord
     public void run(OrderBoutiqueDeleteAdminInput input, OrderBoutique t, Result<OrderBoutiqueDeleteAdminInput, OrderBoutiqueDeleteAdminOutput, OrderBoutique> result) {
         orderLineService.deleteByOrderBoutiqueId(t.getId());
         service.deleteById(t.getId());
-
+        result.setStatus(HttpStatus.OK);
     }
 
 

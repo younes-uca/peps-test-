@@ -254,9 +254,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
     }
 
     public ResponseEntity<List<DTO>> findAll() throws Exception {
-        converter.initList(false);
         ResponseEntity<List<DTO>> byCriteria = findByCriteria(null);
-        converter.initList(true);
         return byCriteria;
     }
 

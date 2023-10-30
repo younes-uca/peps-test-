@@ -9,6 +9,7 @@ import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.workflow.admin.process.orderboutique.OrderBoutiqueConstant;
 import ma.peps.sqli.zynerator.process.AbstractProcessImpl;
 import ma.peps.sqli.zynerator.process.Result;
+import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -49,6 +50,7 @@ public class OrderBoutiqueSaveAdminProcessImpl extends AbstractProcessImpl<Order
                 orderLineService.create(element);
             });
         }
+        result.setStatus(HttpStatus.CREATED);
     }
 
 
