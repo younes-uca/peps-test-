@@ -22,6 +22,7 @@ import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService ;
 import ma.peps.sqli.bean.core.order.OrderBoutique ;
 import ma.peps.sqli.service.facade.admin.catalog.ProductAdminService ;
 import ma.peps.sqli.bean.core.catalog.Product ;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -44,6 +45,8 @@ public class OrderLineAdminServiceImpl extends AbstractServiceImpl<OrderLine, Or
     public List<OrderLine> findByOrderBoutiqueId(Long id){
         return dao.findByOrderBoutiqueId(id);
     }
+
+    @Transactional
     public int deleteByOrderBoutiqueId(Long id){
         return dao.deleteByOrderBoutiqueId(id);
     }

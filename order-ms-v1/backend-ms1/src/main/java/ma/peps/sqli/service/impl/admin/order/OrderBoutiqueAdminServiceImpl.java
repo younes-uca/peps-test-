@@ -26,6 +26,7 @@ public class OrderBoutiqueAdminServiceImpl extends AbstractServiceImpl<OrderBout
     public static final String TEMPLATE = "template/orderBoutique.vm";
     public static final String FILE_NAME = "orderBoutique.pdf";
 
+
     @Override
     public HttpEntity<byte[]> createPdf(OrderBoutiqueDto dto) throws Exception {
         return velocityPdf.createPdf(FILE_NAME, TEMPLATE, dto);
