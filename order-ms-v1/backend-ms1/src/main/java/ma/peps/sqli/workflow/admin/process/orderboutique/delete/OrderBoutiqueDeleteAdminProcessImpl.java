@@ -6,7 +6,6 @@ import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.workflow.admin.process.orderboutique.OrderBoutiqueConstant;
 import ma.peps.sqli.zynerator.process.AbstractProcessImpl;
 import ma.peps.sqli.zynerator.process.Result;
-import org.springframework.transaction.annotation.Transactional;
 
 public class OrderBoutiqueDeleteAdminProcessImpl extends AbstractProcessImpl<OrderBoutiqueDeleteAdminInput, OrderBoutiqueDeleteAdminOutput, OrderBoutique, OrderBoutiqueDeleteAdminConverter> implements OrderBoutiqueDeleteAdminProcess {
 
@@ -21,7 +20,6 @@ public class OrderBoutiqueDeleteAdminProcessImpl extends AbstractProcessImpl<Ord
 
     @Override
     public void validate(OrderBoutiqueDeleteAdminInput input, OrderBoutique item, Result<OrderBoutiqueDeleteAdminInput, OrderBoutiqueDeleteAdminOutput, OrderBoutique> result) {
-
         if (item.getId() == null) {
             result.addErrorMessage("order.delete.reference.notExist");
         }
@@ -40,7 +38,6 @@ public class OrderBoutiqueDeleteAdminProcessImpl extends AbstractProcessImpl<Ord
 
     private OrderBoutiqueAdminService service;
     private OrderLineAdminService orderLineService;
-
 
 
     public OrderBoutiqueDeleteAdminProcessImpl(OrderBoutiqueAdminService service, OrderLineAdminService orderLineService, OrderBoutiqueDeleteAdminConverter converter) {
