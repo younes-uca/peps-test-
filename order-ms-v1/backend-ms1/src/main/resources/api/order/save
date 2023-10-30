@@ -1,7 +1,9 @@
-{
+curl --location 'http://localhost:8036/api/admin/orderBoutique/process/save' \
+--header 'Content-Type: application/json' \
+--data '{
     "reference":"order-5",
     "orderLines":[
         {"price" : 10,"quantity" : 2,  "product":{"id":1}},
         {"price" : 5,"quantity" : 3,  "product":{"id":2}}
     ]
-}
+}'
