@@ -1,0 +1,7 @@
+{
+    "reference":"order-5",
+    "orderLines":[
+        {"price" : 10,"quantity" : 2,  "product":{"id":1}},
+        {"price" : 5,"quantity" : 3,  "product":{"id":2}}
+    ]
+}

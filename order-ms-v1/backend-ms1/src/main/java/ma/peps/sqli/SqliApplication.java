@@ -1,31 +1,28 @@
 package ma.peps.sqli;
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import java.util.*;
-import java.util.stream.Stream;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.cache.annotation.EnableCaching;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-
-import ma.peps.sqli.zynerator.security.common.AuthoritiesConstants;
-import ma.peps.sqli.zynerator.security.bean.User;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import ma.peps.sqli.bean.core.catalog.Product;
+import ma.peps.sqli.service.facade.admin.catalog.ProductAdminService;
 import ma.peps.sqli.zynerator.security.bean.Permission;
 import ma.peps.sqli.zynerator.security.bean.Role;
-import ma.peps.sqli.zynerator.security.service.facade.UserService;
+import ma.peps.sqli.zynerator.security.bean.User;
+import ma.peps.sqli.zynerator.security.common.AuthoritiesConstants;
 import ma.peps.sqli.zynerator.security.service.facade.RoleService;
-
-//import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import ma.peps.sqli.zynerator.security.service.facade.UserService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @EnableCaching
@@ -35,16 +32,16 @@ public class SqliApplication {
     public static ConfigurableApplicationContext ctx;
 
     public static void main(String[] args) {
-        ctx=SpringApplication.run(SqliApplication.class, args);
+        ctx = SpringApplication.run(SqliApplication.class, args);
     }
 
     @Bean
-    RestTemplate restTemplate(){
+    RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
     @Bean
-    ObjectMapper objectMapper(){
+    ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         objectMapper.registerModule(new JavaTimeModule());
@@ -56,31 +53,40 @@ public class SqliApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(UserService userService, RoleService roleService) {
-    return (args) -> {
-        if(true){
+    public CommandLineRunner demo(UserService userService, RoleService roleService, ProductAdminService productAdminService) {
+        return (args) -> {
+            if (true) {
 
 
+                // Role admin
 
-    // Role admin
+                User userForAdmin = new User("admin");
 
-        User userForAdmin = new User("admin");
+                Role roleForAdmin = new Role();
+                roleForAdmin.setAuthority(AuthoritiesConstants.ADMIN);
+                List<Permission> permissionsForAdmin = new ArrayList<>();
+                addPermissionForAdmin(permissionsForAdmin);
+                roleForAdmin.setPermissions(permissionsForAdmin);
+                if (userForAdmin.getRoles() == null)
+                    userForAdmin.setRoles(new ArrayList<>());
 
-        Role roleForAdmin = new Role();
-        roleForAdmin.setAuthority(AuthoritiesConstants.ADMIN);
-        List<Permission> permissionsForAdmin = new ArrayList<>();
-        addPermissionForAdmin(permissionsForAdmin);
-        roleForAdmin.setPermissions(permissionsForAdmin);
-        if(userForAdmin.getRoles()==null)
-            userForAdmin.setRoles(new ArrayList<>());
+                userForAdmin.getRoles().add(roleForAdmin);
+                userService.save(userForAdmin);
 
-        userForAdmin.getRoles().add(roleForAdmin);
-        userService.save(userForAdmin);
+                Product product1 = new Product();
+                product1.setCode("p1");
+                product1.setLibelle("p1");
+                productAdminService.create(product1);
+
+                Product product2 = new Product();
+                product2.setCode("p2");
+                product2.setLibelle("p2");
+                productAdminService.create(product2);
+
+
             }
         };
     }
-
-
 
 
     private static String fakeString(String attributeName, int i) {
@@ -88,10 +94,11 @@ public class SqliApplication {
     }
 
     private static Long fakeLong(String attributeName, int i) {
-        return  10L * i;
+        return 10L * i;
     }
+
     private static Integer fakeInteger(String attributeName, int i) {
-        return  10 * i;
+        return 10 * i;
     }
 
     private static Double fakeDouble(String attributeName, int i) {
@@ -99,16 +106,18 @@ public class SqliApplication {
     }
 
     private static BigDecimal fakeBigDecimal(String attributeName, int i) {
-        return  BigDecimal.valueOf(i*1L*10);
+        return BigDecimal.valueOf(i * 1L * 10);
     }
 
     private static Boolean fakeBoolean(String attributeName, int i) {
         return i % 2 == 0 ? true : false;
     }
+
     private static LocalDateTime fakeLocalDateTime(String attributeName, int i) {
         return LocalDateTime.now().plusDays(i);
     }
-    private static void addPermissionForAdmin(List<Permission> permissions){
+
+    private static void addPermissionForAdmin(List<Permission> permissions) {
         permissions.add(new Permission("Product.edit"));
         permissions.add(new Permission("Product.list"));
         permissions.add(new Permission("Product.view"));

@@ -5,6 +5,7 @@ import ma.peps.sqli.bean.core.order.OrderBoutique;
 import ma.peps.sqli.bean.core.order.OrderLine;
 import ma.peps.sqli.service.facade.admin.commun.OrderStatusAdminService;
 import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.workflow.admin.process.orderboutique.OrderBoutiqueConstant;
 import ma.peps.sqli.zynerator.process.AbstractProcessImpl;
 import ma.peps.sqli.zynerator.process.Result;
@@ -35,22 +36,31 @@ public class OrderBoutiqueSaveAdminProcessImpl extends AbstractProcessImpl<Order
         BigDecimal total = BigDecimal.ZERO;
         List<OrderLine> orderLines = t.getOrderLines();
         if (orderLines != null) {
-            for (OrderLine orderLine : orderLines) {
-                total = total.add(orderLine.getPrice().multiply(orderLine.getQuantity()));
-            }
+            total = orderLines.stream().map(orderLine -> orderLine.getPrice().multiply(orderLine.getQuantity()))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         }
         t.setTotal(total);
-        service.create(t);
+
+        service.save(t);
+
+        if (orderLines != null) {
+            orderLines.forEach(element -> {
+                element.setOrderBoutique(t);
+                orderLineService.create(element);
+            });
+        }
     }
 
 
     private OrderBoutiqueAdminService service;
     private OrderStatusAdminService orderStatusAdminService;
+    private OrderLineAdminService orderLineService;
 
-    public OrderBoutiqueSaveAdminProcessImpl(OrderBoutiqueAdminService service, OrderStatusAdminService orderStatusAdminService, OrderBoutiqueSaveAdminConverter converter) {
+    public OrderBoutiqueSaveAdminProcessImpl(OrderBoutiqueAdminService service, OrderLineAdminService orderLineService, OrderStatusAdminService orderStatusAdminService, OrderBoutiqueSaveAdminConverter converter) {
         super(converter);
         this.service = service;
         this.orderStatusAdminService = orderStatusAdminService;
+        this.orderLineService = orderLineService;
     }
 
 }
