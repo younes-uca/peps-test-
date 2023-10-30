@@ -30,6 +30,9 @@ public class OrderBoutiqueSaveAdminProcessImpl extends AbstractProcessImpl<Order
         if (input.getOrderLines() == null || input.getOrderLines().isEmpty()) {
             result.addErrorMessage("order.save.orderlines.empty");
         }
+        if(service.findByReferenceEntity(item) != null){
+            result.addErrorMessage("order.save.reference.exist");
+        }
     }
 
     @Override
