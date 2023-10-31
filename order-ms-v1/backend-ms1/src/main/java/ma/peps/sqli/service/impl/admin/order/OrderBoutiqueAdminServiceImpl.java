@@ -50,6 +50,20 @@ public class OrderBoutiqueAdminServiceImpl extends AbstractServiceImpl<OrderBout
         orderLineService.deleteByOrderBoutiqueId(id);
     }
 
+    @Transactional
+    public void deleteAll() {
+        dao.deleteAll();
+    }
+
+
+    public void deleteByReferenceEntity(OrderBoutique orderBoutique) {
+        dao.deleteByReference(orderBoutique.getReference());
+    }
+
+    @Transactional
+    public void deleteAssociatedListsByReference(OrderBoutique orderBoutique) {
+        orderLineService.deleteByOrderBoutiqueReference(orderBoutique.getReference());
+    }
 
     public void updateWithAssociatedLists(OrderBoutique orderBoutique) {
         if (orderBoutique != null && orderBoutique.getId() != null) {
@@ -75,6 +89,10 @@ public class OrderBoutiqueAdminServiceImpl extends AbstractServiceImpl<OrderBout
 
     public long countByOrderStatusCode(String code) {
         return dao.countByOrderStatusCode(code);
+    }
+
+    public List<OrderBoutique> findAllOptimized() {
+        return dao.findAllOptimized();
     }
 
 

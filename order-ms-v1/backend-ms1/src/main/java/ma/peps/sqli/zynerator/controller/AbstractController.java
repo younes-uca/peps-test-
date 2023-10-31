@@ -139,6 +139,16 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    public ResponseEntity<DTO> findByReference(T t, String[] includes, String[] excludes) throws Exception {
+        T loaded = service.findByReferenceEntity(t);
+        if (loaded != null) {
+            converter.init(true);
+            DTO dto = converter.toDto(t);
+            return getDtoResponseEntity(dto, includes, excludes);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     public ResponseEntity<DTO> findWithAssociatedLists(Long id) {
         T loaded = service.findWithAssociatedLists(id);
         converter.init(true);
@@ -222,6 +232,19 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
             }
         }
         res = new ResponseEntity<>(id, status);
+        return res;
+    }
+
+    protected ResponseEntity<T> deleteByReferenceEntityWithAssociatedLists(T t) throws Exception {
+        ResponseEntity<T> res;
+        HttpStatus status = HttpStatus.PRECONDITION_FAILED;
+        if (t != null) {
+            boolean resultDelete = service.deleteByReferenceEntityWithAssociatedLists(t);
+            if (resultDelete) {
+                status = HttpStatus.OK;
+            }
+        }
+        res = new ResponseEntity<>(t, status);
         return res;
     }
 

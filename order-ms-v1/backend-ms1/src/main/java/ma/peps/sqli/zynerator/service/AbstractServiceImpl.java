@@ -45,16 +45,15 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     protected Class<? extends AbstractSpecification<CRITERIA, T>> specificationClass;
 
 
-
     protected REPO dao;
     @Autowired
     protected UserService userService;
 
     protected Class<T> itemClass;
 
-@Value("${uploads.location.directory}")
+    @Value("${uploads.location.directory}")
     private String UPLOADED_FOLDER;
-@Value("${uploads.location.temp}")
+    @Value("${uploads.location.temp}")
     private String UPLOADED_TEMP_FOLDER;
 
     public AbstractServiceImpl(REPO dao) {
@@ -62,6 +61,9 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
         this.configure();
     }
 
+
+    public void deleteAssociatedListsByReference(T t) {
+    }
 
     public void deleteAssociatedLists(Long id) {
     }
@@ -115,7 +117,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
                 }
             }
         }
-    return result;
+        return result;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
@@ -167,7 +169,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     }
 
     public T findById(Long id) {
-    Optional<T> item = dao.findById(id);
+        Optional<T> item = dao.findById(id);
         return item.orElse(null);
     }
 
@@ -196,7 +198,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
         List<T> list = new ArrayList<>();
         for (T t : items) {
             T founded = findByReferenceEntity(t);
-                if (founded == null) {
+            if (founded == null) {
                 findOrSaveAssociatedObject(t);
                 dao.save(t);
             } else {
@@ -210,9 +212,28 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
         return findById(id);
     }
 
-    public void deleteWithAssociatedLists(T t) {
-        deleteAssociatedLists(t.getId());
-        delete(t);
+    public void deleteByReferenceEntity(T t) {
+        dao.deleteById(t.getId());
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, readOnly = false)
+    public boolean deleteByReferenceEntityWithAssociatedLists(T t) {
+        boolean result = false;
+        if (t != null && deleteByReferenceCheckCondition(t)) {
+            deleteAssociatedListsByReference(t);
+            deleteByReferenceEntity(t);
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteByReferenceCheckCondition(T t) {
+        return true;
+    }
+
+
+    private long countByReferenceEntity(T t) {
+        return 0;
     }
 
     public void updateWithAssociatedLists(T t) {
@@ -234,7 +255,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
             for (T t : list) {
                 deleteAssociatedLists(t.getId());
                 dao.deleteById(t.getId()); // il fait find by id apres delete !!!
-            //constructAndSaveHistory(dto, ACTION_TYPE.DELETE); TO DO
+                //constructAndSaveHistory(dto, ACTION_TYPE.DELETE); TO DO
             }
         }
     }
@@ -277,7 +298,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
 
     public List<T> findAll() {
         return dao.findAll();
-        }
+    }
 
     public List<T> findAllOptimized() {
         return dao.findAll();
@@ -325,8 +346,6 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     */
 
 
-
-
     public void configure(Class<T> itemClass, Class<? extends AbstractSpecification<CRITERIA, T>> specificationClass) {
         this.itemClass = itemClass;
         this.specificationClass = specificationClass;
@@ -338,19 +357,19 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     private void addEtablissementConstraint(CRITERIA criteria) {
         Object userInfo = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userInfo instanceof User) {
-        User currentUser = (User) userInfo;
-        criteria.setEtablissementId(currentUser.getEtablissement() != null ? currentUser.getEtablissement().getId() : null);
+            User currentUser = (User) userInfo;
+            criteria.setEtablissementId(currentUser.getEtablissement() != null ? currentUser.getEtablissement().getId() : null);
         }
     }
 
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal != null && principal instanceof User) {
-        return (User) principal;
+            return (User) principal;
         } else if (principal != null && principal instanceof String) {
-        return userService.findByUsername(principal.toString());
+            return userService.findByUsername(principal.toString());
         } else {
-        return null;
+            return null;
         }
     }
 
@@ -361,7 +380,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
     }
 
 
-    public String uploadFile(String checksumOld, String tempUpladedFile,String destinationFilePath) throws Exception {
+    public String uploadFile(String checksumOld, String tempUpladedFile, String destinationFilePath) throws Exception {
         String crName = null;
         if (FileUtils.isFileExist(UPLOADED_TEMP_FOLDER, tempUpladedFile)) {
             String filePath = destinationFilePath;
@@ -369,9 +388,9 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
                 return crName;
 
             String checksum = MD5Checksum.getMD5Checksum(UPLOADED_TEMP_FOLDER + tempUpladedFile);
-                if (!checksum.equals(checksumOld)) {
-                    throw new BusinessRuleException("errors.file.checksum", new String[]{tempUpladedFile});
-                }
+            if (!checksum.equals(checksumOld)) {
+                throw new BusinessRuleException("errors.file.checksum", new String[]{tempUpladedFile});
+            }
 
             crName = FileUtils.saveFile(UPLOADED_TEMP_FOLDER, UPLOADED_FOLDER, tempUpladedFile, filePath, "");
 
@@ -462,8 +481,8 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
                         beanWrapper.setPropertyValue(attributes.get(cellIndex).getName(), value);
                     }
                     cellIndex++;
-                    }
-                    items.add(item);
+                }
+                items.add(item);
             }
         } catch (Exception e) {
             e.printStackTrace();

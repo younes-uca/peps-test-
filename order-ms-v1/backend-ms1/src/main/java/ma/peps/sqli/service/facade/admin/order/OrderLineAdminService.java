@@ -14,8 +14,9 @@ public interface OrderLineAdminService extends  IService<OrderLine,OrderLineCrit
     long countByProductCode(String code);
     List<OrderLine> findByOrderBoutiqueId(Long id);
     int deleteByOrderBoutiqueId(Long id);
+    int deleteByOrderBoutiqueReference(String reference);
     long countByOrderBoutiqueReference(String reference);
 
 
-
+    void deleteAll();
 }

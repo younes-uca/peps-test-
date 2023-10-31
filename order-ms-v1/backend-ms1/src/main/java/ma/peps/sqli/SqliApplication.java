@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ma.peps.sqli.bean.core.catalog.Product;
+import ma.peps.sqli.bean.core.order.OrderBoutique;
 import ma.peps.sqli.service.facade.admin.catalog.ProductAdminService;
+import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.zynerator.security.bean.Permission;
 import ma.peps.sqli.zynerator.security.bean.Role;
 import ma.peps.sqli.zynerator.security.bean.User;
@@ -53,9 +56,11 @@ public class SqliApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(UserService userService, RoleService roleService, ProductAdminService productAdminService) {
+    public CommandLineRunner demo(UserService userService, RoleService roleService, OrderBoutiqueAdminService orderAdminService, OrderLineAdminService orderLineAdminService, ProductAdminService productAdminService) {
         return (args) -> {
-            if (true) {
+            orderLineAdminService.deleteAll();
+            orderAdminService.deleteAll();
+            if (false) {
 
 
                 // Role admin

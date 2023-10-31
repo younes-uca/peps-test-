@@ -21,4 +21,6 @@ public interface OrderBoutiqueAdminService extends IService<OrderBoutique, Order
 
     HttpEntity<byte[]> createPdf(OrderBoutiqueDto dto) throws Exception;
 
+    void deleteAll();
+
 }

@@ -97,6 +97,11 @@ public class OrderBoutiqueRestAdmin  extends AbstractController<OrderBoutique, O
     public ResponseEntity<OrderBoutiqueDto> findById(@PathVariable Long id, String[] includes, String[] excludes) throws Exception {
         return super.findById(id, includes, excludes);
     }
+    @Operation(summary = "Finds a orderBoutique by reference")
+    @GetMapping("reference/{reference}")
+    public ResponseEntity<OrderBoutiqueDto> findByReference(@PathVariable String reference, String[] includes, String[] excludes) throws Exception {
+        return super.findByReference(new OrderBoutique(reference), includes, excludes);
+    }
     @Operation(summary = "Saves the specified  orderBoutique")
     @PostMapping("")
     public ResponseEntity<OrderBoutiqueDto> save(@RequestBody OrderBoutiqueDto dto) throws Exception {
@@ -108,6 +113,7 @@ public class OrderBoutiqueRestAdmin  extends AbstractController<OrderBoutique, O
     public ResponseEntity<OrderBoutiqueDto> update(@RequestBody OrderBoutiqueDto dto) throws Exception {
         return super.update(dto);
     }
+
 
     @Operation(summary = "Delete list of orderBoutique")
     @PostMapping("multiple")
@@ -125,6 +131,12 @@ public class OrderBoutiqueRestAdmin  extends AbstractController<OrderBoutique, O
     public ResponseEntity<Long> deleteById(@PathVariable Long id) throws Exception {
         return super.deleteById(id);
     }
+    @Operation(summary = "Delete the specified orderBoutique")
+    @DeleteMapping("reference/{reference}")
+    public ResponseEntity<OrderBoutique> deleteByReference(@PathVariable String reference) throws Exception {
+        return super.deleteByReferenceEntityWithAssociatedLists(new OrderBoutique(reference));
+    }
+
     @Operation(summary = "Delete multiple orderBoutiques by ids")
     @DeleteMapping("multiple/id")
     public ResponseEntity<List<Long>> deleteByIdIn(@RequestBody List<Long> ids) throws Exception {

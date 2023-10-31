@@ -26,7 +26,7 @@ public interface IService<T extends BusinessObject, Criteria extends BaseCriteri
 
     T findWithAssociatedLists(Long id);
 
-    void deleteWithAssociatedLists(T t);
+    boolean deleteByReferenceEntityWithAssociatedLists(T t);
 
     List<T> findByCriteria(Criteria critera);
 
