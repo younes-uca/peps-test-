@@ -15,7 +15,43 @@ curl --location 'http://localhost:8036/api/admin/orderBoutique/process/delete' \
     "reference":"order-5"
 }'
 
-
+#find all GET
 curl --location 'http://localhost:8036/api/admin/orderBoutique/'
 
+#find all optimized  GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/optimized'
+
+#find by id GET
 curl --location 'http://localhost:8036/api/admin/orderBoutique/id/3'
+
+#delete by id DELETE
+curl --location 'http://localhost:8036/api/admin/orderBoutique/id/3'
+
+
+#delete by id in a list of ids DELETE :: give a list of ids
+curl --location 'http://localhost:8036/api/admin/orderBoutique/multiple/id'
+
+
+#find by orderStatus id GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/orderStatus/id/1'
+
+
+#delete by orderStatus id DELETE
+curl --location 'http://localhost:8036/api/admin/orderBoutique/orderStatus/id/1'
+
+
+#find details ( inner list ) by id GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/detail/id/1'
+
+
+#find list of orderBoutique by criteria GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/find-by-criteria'
+
+
+#find paginated orderBoutique by criteria GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/find-paginated-by-criteria'
+
+
+#find data size orderBoutique by criteria GET
+curl --location 'http://localhost:8036/api/admin/orderBoutique/data-size-by-criteria'
+
