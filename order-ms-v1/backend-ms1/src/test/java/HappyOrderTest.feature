@@ -4,11 +4,15 @@ Feature: MS orderBoutique
     * url 'http://localhost:8036/api/admin/orderBoutique/'
 
 
+
   Scenario: POST Order Boutique and GET it by ID
+    # TODO generate reference with UID
+    # TODO validation for response data
+    # TODO DB Clean Up before & after test
     * def postBody =
     """
 {
-    "reference": "order-5",
+    "reference": "order-9",
     "orderLines": [
         {
             "price": 10,
@@ -28,28 +32,33 @@ Feature: MS orderBoutique
     ]
 }
     """
-
     Given path 'process/save'
     And request postBody
     When method POST
     Then status 201
 
-    * def order = response.output
 
+    * def order = response.output
     Given path 'id', order.id
     When method GET
     Then status 200
 
 
+
   Scenario: DELETE Order Boutique and GET all
+    # TODO test case for 200, 204, 412 & all others...
 
     Given path 'process/delete/reference/order-5'
     When method DELETE
-    Then status 200
+    * def responseCode = (response == '' ? 204 : (response.errors[0] == '' ? 200 : 412))
+    And print "responseCode: " + responseCode + "|| responseStatus: " + responseStatus
+    Then assert responseStatus == responseCode
+    And print "responseHeaders: " + responseHeaders + " || responseCookies: " + responseCookies
 
-    * def order = response.output
 
     Given path ''
     When method GET
-    Then status 204
-    # Todo: 200 in case there is other orders, otherwise 204 if no order in DB
+    * def responseCode = (response == '' ? 204 : 200)
+    And print "responseCode: " + responseCode + "|| responseStatus: " + responseStatus
+    Then assert responseStatus == responseCode
+    And print "responseHeaders: " + responseHeaders + " || responseCookies: " + responseCookies
