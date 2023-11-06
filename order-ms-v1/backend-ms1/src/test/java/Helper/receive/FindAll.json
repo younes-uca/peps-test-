@@ -1,0 +1,11 @@
+{
+  "id": "#number",
+  "reference": "#string",
+  "orderDate": "#string",
+  "total": "#number",
+  "orderStatus": {
+    "id": "#number",
+    "libelle": "#string",
+    "code": "#string"
+  }
+}
