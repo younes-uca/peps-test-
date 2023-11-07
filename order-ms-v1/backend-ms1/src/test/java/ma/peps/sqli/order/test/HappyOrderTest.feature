@@ -2,12 +2,12 @@ Feature: MS orderBoutique
 
   Background:
     * url 'http://localhost:8036/api/admin/orderBoutique/'
-    * def postBody = read('../Helper/postOrder.json')
-    * def FindAllSchema = read('../Helper/receive/FindAll.json')
+    * def postBody = read('../data/Save.json')
+    * def FindAllSchema = read('../schema/FindAll.json')
 
 
 
-
+  @Save
   Scenario: POST Order Boutique * GET it by ID
     # TODO DB Clean Up before & after test
     * path 'process/save'
@@ -31,7 +31,7 @@ Feature: MS orderBoutique
     * match orderLines == response.orderLines
 
 
-
+  @Delete
   Scenario: DELETE Order Boutique * GET all
 
     * path 'process/delete/reference', postBody.reference

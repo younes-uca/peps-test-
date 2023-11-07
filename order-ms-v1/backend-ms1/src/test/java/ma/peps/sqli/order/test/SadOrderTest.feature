@@ -9,7 +9,7 @@ Feature: MS orderBoutique Tests
   Scenario: POST Order Boutique Twice with same reference
     # * def uniqueRef = Java.type('Helper.utilities').generateUniqueId()
 
-    * def postBody = read('../Helper/postOrder.json')
+    * def postBody = read('../data/Save.json')
     * path 'process/save'
     * request postBody
     * method POST
