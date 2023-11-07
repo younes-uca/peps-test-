@@ -1,7 +1,7 @@
-package ma.peps.sqli.service.impl.open;
+package ma.peps.sqli.service.core.facade.impl.open;
 
 
-import ma.peps.sqli.service.facade.open.MinIOService;
+import ma.peps.sqli.service.open.MinIOService;
 import java.io.InputStream;
 
 import io.minio.*;

@@ -1,14 +1,15 @@
 package ma.peps.sqli.zynerator.history;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import ma.peps.sqli.zynerator.bean.BusinessObject;
 
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**
- * Classe mère abstraite de tous les Objets métier.
  *
- * @author JAF
+ * @author Zouani
  * @version 1.2
  */
 
@@ -18,37 +19,39 @@ public class HistBusinessObject extends BusinessObject {
     /**
      * ObjectName
      */
-    private String objectName;
+    protected String objectName;
 
     /**
      * data
      */
-    private String data;
+    @Lob
+    @Column(columnDefinition="TEXT")
+    protected String data;
 
     /**
      * UserId
      */
-    private Long userId;
+    protected Long userId;
 
     /**
      * Username
      */
-    private String username;
+    protected String username;
 
     /**
      * Type_action
      */
-    private String actionType;
+    protected String actionType;
 
     /**
      * ObjectId
      */
-    private Long objectId;
+    protected Long objectId;
 
     /**
      * Date
      */
-    private LocalDateTime date;
+    protected LocalDateTime dateHistory;
 
     /**
      * Constructeur par défaut.
@@ -110,12 +113,12 @@ public class HistBusinessObject extends BusinessObject {
         this.objectId = objectId;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateHistory() {
+        return dateHistory;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateHistory(LocalDateTime dateHistory) {
+        this.dateHistory = dateHistory;
     }
 
     public String toString() {

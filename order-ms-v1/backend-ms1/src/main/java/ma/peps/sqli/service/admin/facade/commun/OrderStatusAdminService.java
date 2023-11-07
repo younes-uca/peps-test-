@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.facade.admin.commun;
+package ma.peps.sqli.service.core.facade.admin.commun;
 
 import java.util.List;
 import ma.peps.sqli.bean.core.commun.OrderStatus;

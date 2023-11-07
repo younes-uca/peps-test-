@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.impl.admin.order;
+package ma.peps.sqli.service.core.facade.impl.admin.order;
 
 
 import ma.peps.sqli.bean.core.order.OrderBoutique;
@@ -6,9 +6,9 @@ import ma.peps.sqli.bean.core.order.OrderLine;
 import ma.peps.sqli.dao.criteria.core.order.OrderBoutiqueCriteria;
 import ma.peps.sqli.dao.facade.core.order.OrderBoutiqueDao;
 import ma.peps.sqli.dao.specification.core.order.OrderBoutiqueSpecification;
-import ma.peps.sqli.service.facade.admin.commun.OrderStatusAdminService;
-import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
-import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
+import ma.peps.sqli.service.core.facade.admin.commun.OrderStatusAdminService;
+import ma.peps.sqli.service.core.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.core.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.ws.dto.order.OrderBoutiqueDto;
 import ma.peps.sqli.zynerator.service.AbstractServiceImpl;
 import ma.peps.sqli.zynerator.util.ListUtil;

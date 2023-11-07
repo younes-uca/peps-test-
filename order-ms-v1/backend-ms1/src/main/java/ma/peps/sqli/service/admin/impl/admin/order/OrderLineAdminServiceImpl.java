@@ -1,28 +1,22 @@
-package ma.peps.sqli.service.impl.admin.order;
+package ma.peps.sqli.service.core.facade.impl.admin.order;
 
 
 import ma.peps.sqli.bean.core.order.OrderLine;
 import ma.peps.sqli.dao.criteria.core.order.OrderLineCriteria;
 import ma.peps.sqli.dao.facade.core.order.OrderLineDao;
 import ma.peps.sqli.dao.specification.core.order.OrderLineSpecification;
-import ma.peps.sqli.service.facade.admin.order.OrderLineAdminService;
+import ma.peps.sqli.service.core.facade.admin.order.OrderLineAdminService;
 import ma.peps.sqli.zynerator.service.AbstractServiceImpl;
-import ma.peps.sqli.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
-import ma.peps.sqli.bean.core.order.OrderBoutique;
-import ma.peps.sqli.service.facade.admin.catalog.ProductAdminService;
-import ma.peps.sqli.bean.core.catalog.Product;
+import ma.peps.sqli.service.core.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.core.facade.admin.catalog.ProductAdminService;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class OrderLineAdminServiceImpl extends AbstractServiceImpl<OrderLine, OrderLineCriteria, OrderLineDao> implements OrderLineAdminService {

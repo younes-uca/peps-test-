@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.facade.admin.order;
+package ma.peps.sqli.service.core.facade.admin.order;
 
 import ma.peps.sqli.bean.core.order.OrderBoutique;
 import ma.peps.sqli.dao.criteria.core.order.OrderBoutiqueCriteria;

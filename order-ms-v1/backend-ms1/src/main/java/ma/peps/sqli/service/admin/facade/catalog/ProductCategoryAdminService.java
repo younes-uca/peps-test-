@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.facade.admin.catalog;
+package ma.peps.sqli.service.core.facade.admin.catalog;
 
 import java.util.List;
 import ma.peps.sqli.bean.core.catalog.ProductCategory;

@@ -54,7 +54,7 @@ public class AuditEntityDto extends BaseDto {
         if (auditEntityDto != null) {
             auditEntityDto.setId(histBusinessObject.getId());
             auditEntityDto.setObjectName(histBusinessObject.getObjectName());
-            auditEntityDto.setDate(DateUtil.dateTimeToString(histBusinessObject.getDate()));
+            auditEntityDto.setDate(DateUtil.dateTimeToString(histBusinessObject.getDateHistory()));
             auditEntityDto.setObjectId(histBusinessObject.getObjectId());
             auditEntityDto.setActionType(histBusinessObject.getActionType());
             auditEntityDto.setData(histBusinessObject.getData());

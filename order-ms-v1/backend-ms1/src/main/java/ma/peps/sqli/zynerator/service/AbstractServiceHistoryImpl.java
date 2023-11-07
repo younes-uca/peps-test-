@@ -1,6 +1,11 @@
 package ma.peps.sqli.zynerator.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ma.peps.sqli.zynerator.audit.AuditBusinessObject;
+import ma.peps.sqli.zynerator.criteria.BaseCriteria;
 import ma.peps.sqli.zynerator.dto.AuditEntityDto;
+import ma.peps.sqli.zynerator.dto.BaseDto;
+import ma.peps.sqli.zynerator.enumeration.ACTION_TYPE;
 import ma.peps.sqli.zynerator.exception.EntityNotFoundException;
 import ma.peps.sqli.zynerator.history.HistBusinessObject;
 import ma.peps.sqli.zynerator.history.HistCriteria;
@@ -16,32 +21,35 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
-public abstract class AbstractServiceHistoryImpl< H extends HistBusinessObject, HC extends HistCriteria,  HISTREPO extends AbstractHistoryRepository<H, Long>>  {
-
+public abstract class AbstractServiceHistoryImpl<H extends HistBusinessObject, DTO extends BaseDto, T extends AuditBusinessObject, HC extends HistCriteria, HISTREPO extends AbstractHistoryRepository<H, Long>, SERV extends IService<T, ?>> {
 
 
     protected HISTREPO historyRepository;
+    protected SERV service;
+
     protected Class<H> historyClass;
     protected Class<HC> historyCriteriaClass;
+    protected Class<T> itemClass;
     protected Class<? extends AbstractHistorySpecification<HC, H>> historySPecificationClass;
 
 
     @Autowired
     protected UserService userService;
+    @Autowired
+    protected ObjectMapper objectMapper;
 
 
-
-    public AbstractServiceHistoryImpl( HISTREPO historyRepository) {
+    public AbstractServiceHistoryImpl(HISTREPO historyRepository, SERV service) {
         this.historyRepository = historyRepository;
+        this.service = service;
         this.configure();
     }
 
-
-    public void deleteAssociatedLists(Long id) {
-    }
 
     public void deleteById(Long id) {
         historyRepository.deleteById(id);
@@ -51,39 +59,39 @@ public abstract class AbstractServiceHistoryImpl< H extends HistBusinessObject, 
         //dao.deleteByIdIn(ids);
     }
 
-
-    /*
-    public void saveAuditData(DTO dto, ACTION_TYPE action){
-    DTO old = abstractConverter.toDto(findById(dto.getId()));
-    try {
-        if (Utils.compareObjectsDiff(dto, old)) {
-            constructAndSaveHistory(dto, action);
-        }
-        } catch (NoSuchMethodException e) {
+    public void save(DTO dto, ACTION_TYPE action) {
+        try {
+            String dtoAsJson = objectMapper.writeValueAsString(dto);
+            save(dtoAsJson, dto.getId(), action);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void constructAndSaveHistory(DTO dto, ACTION_TYPE action) {
+    public void save(T t, ACTION_TYPE action) {
+        try {
+            if (t != null) {
+                String dtoAsJson = objectMapper.writeValueAsString(t);
+                save(dtoAsJson, t.getId(), action);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void save(String dataAsJson, Long id, ACTION_TYPE action) {
         User currentUser = getCurrentUser();
         H history = RefelexivityUtil.constructObjectUsingDefaultConstr(historyClass);
         history.setActionType(action.name());
         history.setObjectName(itemClass.getSimpleName());
-        history.setObjectId(dto.getId());
-        history.setUserId(currentUser.getId());
-        history.setUsername(currentUser.getUsername());
-        String dtoAsJson = null;
-        try {
-            dtoAsJson = new ObjectMapper().writeValueAsString(dto);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        history.setData(dtoAsJson);
-        history.setDate(LocalDateTime.now());
+        history.setObjectId(id);
+        /*history.setUserId(currentUser.getId());
+        history.setUsername(currentUser.getUsername());*/
+        history.setData(dataAsJson);
+        history.setDateHistory(LocalDateTime.now());
         historyRepository.save(history);
     }
 
-    */
 
     public AuditEntityDto findHistoryById(Long id) {
         H h = historyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("errors.notFound", new String[]{historyClass.getSimpleName(), id.toString()}));
@@ -127,23 +135,25 @@ public abstract class AbstractServiceHistoryImpl< H extends HistBusinessObject, 
         return mySpecification;
     }
 
-    public void configure(Class<H> historyClass, Class<HC> historyCriteriaClass) {
+    public void configure(Class<H> historyClass, Class<HC> historyCriteriaClass, Class<T> itemClass) {
         this.historyClass = historyClass;
         this.historyCriteriaClass = historyCriteriaClass;
+        this.itemClass = itemClass;
     }
 
     public abstract void configure();
 
 
-
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal != null && principal instanceof User) {
-        return (User) principal;
+            return (User) principal;
         } else if (principal != null && principal instanceof String) {
-        return userService.findByUsername(principal.toString());
+            return userService.findByUsername(principal.toString());
         } else {
-        return null;
+            User ana = new User("ana"); // TODO : change this to return null just for test purpose;
+            ana.setId(1L);
+            return ana;
         }
     }
 

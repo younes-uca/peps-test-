@@ -310,43 +310,7 @@ public abstract class AbstractServiceImpl<T extends AuditBusinessObject, CRITERI
         return mySpecification;
     }
 
-    //****************************** HISTORY
-
-    /*
-    public void saveAuditData(DTO dto, ACTION_TYPE action){
-    DTO old = abstractConverter.toDto(findById(dto.getId()));
-    try {
-        if (Utils.compareObjectsDiff(dto, old)) {
-            constructAndSaveHistory(dto, action);
-        }
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void constructAndSaveHistory(DTO dto, ACTION_TYPE action) {
-        User currentUser = getCurrentUser();
-        H history = RefelexivityUtil.constructObjectUsingDefaultConstr(historyClass);
-        history.setActionType(action.name());
-        history.setObjectName(itemClass.getSimpleName());
-        history.setObjectId(dto.getId());
-        history.setUserId(currentUser.getId());
-        history.setUsername(currentUser.getUsername());
-        String dtoAsJson = null;
-        try {
-            dtoAsJson = new ObjectMapper().writeValueAsString(dto);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        history.setData(dtoAsJson);
-        history.setDate(LocalDateTime.now());
-        historyRepository.save(history);
-    }
-
-    */
-
-
-    public void configure(Class<T> itemClass, Class<? extends AbstractSpecification<CRITERIA, T>> specificationClass) {
+     public void configure(Class<T> itemClass, Class<? extends AbstractSpecification<CRITERIA, T>> specificationClass) {
         this.itemClass = itemClass;
         this.specificationClass = specificationClass;
     }

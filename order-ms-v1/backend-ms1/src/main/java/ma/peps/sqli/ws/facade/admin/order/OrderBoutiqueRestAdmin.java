@@ -1,18 +1,13 @@
 package  ma.peps.sqli.ws.facade.admin.order;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.peps.sqli.bean.core.order.OrderBoutique;
 import ma.peps.sqli.dao.criteria.core.order.OrderBoutiqueCriteria;
-import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.core.facade.admin.order.OrderBoutiqueAdminService;
 import ma.peps.sqli.ws.converter.order.OrderBoutiqueConverter;
 import ma.peps.sqli.ws.dto.order.OrderBoutiqueDto;
 import ma.peps.sqli.zynerator.controller.AbstractController;
-import ma.peps.sqli.zynerator.dto.AuditEntityDto;
 import ma.peps.sqli.zynerator.util.PaginatedList;
 
 

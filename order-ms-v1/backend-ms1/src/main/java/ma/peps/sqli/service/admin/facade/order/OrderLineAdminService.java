@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.facade.admin.order;
+package ma.peps.sqli.service.core.facade.admin.order;
 
 import java.util.List;
 import ma.peps.sqli.bean.core.order.OrderLine;

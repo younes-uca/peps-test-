@@ -1,18 +1,13 @@
 package  ma.peps.sqli.ws.facade.admin.commun;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import ma.peps.sqli.bean.core.commun.OrderStatus;
 import ma.peps.sqli.dao.criteria.core.commun.OrderStatusCriteria;
-import ma.peps.sqli.service.facade.admin.commun.OrderStatusAdminService;
+import ma.peps.sqli.service.core.facade.admin.commun.OrderStatusAdminService;
 import ma.peps.sqli.ws.converter.commun.OrderStatusConverter;
 import ma.peps.sqli.ws.dto.commun.OrderStatusDto;
 import ma.peps.sqli.zynerator.controller.AbstractController;
-import ma.peps.sqli.zynerator.dto.AuditEntityDto;
 import ma.peps.sqli.zynerator.util.PaginatedList;
 
 
@@ -22,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import ma.peps.sqli.zynerator.process.Result;
 
 import org.springframework.http.HttpEntity;
 

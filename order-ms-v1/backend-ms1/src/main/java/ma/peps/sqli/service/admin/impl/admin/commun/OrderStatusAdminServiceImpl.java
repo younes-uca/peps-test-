@@ -1,18 +1,13 @@
-package ma.peps.sqli.service.impl.admin.commun;
+package ma.peps.sqli.service.core.facade.impl.admin.commun;
 
 
 import ma.peps.sqli.bean.core.commun.OrderStatus;
 import ma.peps.sqli.dao.criteria.core.commun.OrderStatusCriteria;
 import ma.peps.sqli.dao.facade.core.commun.OrderStatusDao;
 import ma.peps.sqli.dao.specification.core.commun.OrderStatusSpecification;
-import ma.peps.sqli.service.facade.admin.commun.OrderStatusAdminService;
+import ma.peps.sqli.service.core.facade.admin.commun.OrderStatusAdminService;
 import ma.peps.sqli.zynerator.service.AbstractServiceImpl;
-import ma.peps.sqli.zynerator.util.ListUtil;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.ArrayList;
-
-
 
 
 import ma.peps.sqli.zynerator.util.VelocityPdf;
@@ -21,8 +16,6 @@ import org.springframework.http.HttpEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import java.util.List;
 @Service
 public class OrderStatusAdminServiceImpl extends AbstractServiceImpl<OrderStatus, OrderStatusCriteria, OrderStatusDao> implements OrderStatusAdminService {
     public static final String TEMPLATE = "template/orderStatus.vm";

@@ -1,7 +1,7 @@
 package ma.peps.sqli.workflow.admin.process.orderboutique.update;
 
 import ma.peps.sqli.bean.core.order.OrderBoutique;
-import ma.peps.sqli.service.facade.admin.order.OrderBoutiqueAdminService;
+import ma.peps.sqli.service.core.facade.admin.order.OrderBoutiqueAdminService;
 import ma.peps.sqli.zynerator.process.AbstractProcessImpl;
 import ma.peps.sqli.zynerator.process.Result;
 

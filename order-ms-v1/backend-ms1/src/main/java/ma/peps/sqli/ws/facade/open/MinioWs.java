@@ -1,7 +1,7 @@
 package ma.peps.sqli.ws.facade.open;
 
 import io.minio.errors.MinioException;
-import ma.peps.sqli.service.facade.open.MinIOService;
+import ma.peps.sqli.service.open.MinIOService;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -18,10 +18,6 @@ import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
-
-import ma.peps.sqli.service.facade.open.MinIOService;
-
 
 
 //1- download minio from :::: https://min.io/docs/minio/windows/index.html ::: https://dl.min.io/server/minio/release/windows-amd64/minio.exe

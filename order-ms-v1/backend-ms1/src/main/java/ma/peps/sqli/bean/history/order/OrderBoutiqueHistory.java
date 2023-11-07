@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "order_boutique")
+@Table(name = "order_boutique_history")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@SequenceGenerator(name="order_boutique_seq",sequenceName="order_boutique_seq",allocationSize=1, initialValue = 1)
+@SequenceGenerator(name="order_boutique_history_seq",sequenceName="order_boutique_history_seq",allocationSize=1, initialValue = 1)
 public class OrderBoutiqueHistory extends HistBusinessObject  {
 
 
@@ -22,7 +22,7 @@ public class OrderBoutiqueHistory extends HistBusinessObject  {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="order_boutique_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="order_boutique_history_seq")
     public Long getId() {
     return id;
     }

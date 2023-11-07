@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.facade.open;
+package ma.peps.sqli.service.open;
 
 import io.minio.errors.MinioException;
 import org.springframework.web.multipart.MultipartFile;
