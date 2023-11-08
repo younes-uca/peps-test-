@@ -2,8 +2,36 @@ Feature: MS orderBoutique
 
   Background:
     * url 'http://localhost:8036/api/admin/orderBoutique/'
-    * def postBody = read('../data/Save.json')
+    * header Content-Type = 'application/json'
     * def FindAllSchema = read('../schema/FindAll.json')
+
+    * def postBody = read('../data/Save.json')
+    * def uuid = function() { return '' + java.util.UUID.randomUUID(); }
+    * postBody.reference = uuid()
+
+
+
+  @FindAll
+  Scenario Outline: Find All - in case DB is empty (204) * in case DB filled (200)
+
+    * def payload = ("<method>" == "POST") ? postBody : {}
+    # * def res = { pass: true, message: null }
+
+    * path <paths>
+    * request payload
+    * method <method>
+    * status <responseCode>
+    * def res = karate.match(<match>[0])
+    * match res == { pass: true, message: null }
+    * def res = karate.match(<match>[1])
+    * match res == { pass: true, message: null }
+
+
+    Examples:
+      | responseCode | paths         | method | match                                                                                    |
+      | 204          | ''            | GET    | ["response.length == 0", "payload != ''"]                                                |
+      | 201          | 'process/save'| POST   | ["payload != ''", "payload != ''"]                                                       |
+      | 200          | ''            | GET    | ["each response contains FindAllSchema "," response[0].reference == postBody.reference"] |
 
 
 
@@ -39,7 +67,6 @@ Feature: MS orderBoutique
     * def responseCode = (response.errors == '' ? 200 : 412)
     * print "responseCode: " + responseCode + " || responseStatus: " + responseStatus
     * assert responseStatus == responseCode
-    * def respValidation = false
     * def respValidation = (responseCode == 200 ? ( response.errors == '' && response.status == "OK" && response.output.reference == postBody.reference) : false)
     * assert respValidation == true
 
@@ -50,27 +77,3 @@ Feature: MS orderBoutique
     * print "responseCode: " + responseCode + "|| responseStatus: " + responseStatus
     * assert responseStatus == responseCode
     * print "responseHeaders: " + responseHeaders + " || responseCookies: " + responseCookies
-
-
-
-  @FindAll
-  Scenario Outline: Find All - in case DB is empty (204) * in case DB filled (200)
-
-    * def payload = ("<method>" == "POST") ? postBody : {}
-    # * def res = { pass: true, message: null }
-
-    * path <paths>
-    * request payload
-    * method <method>
-    * status <responseCode>
-    * def res = karate.match(<match>[0])
-    * match res == { pass: true, message: null }
-    * def res = karate.match(<match>[1])
-    * match res == { pass: true, message: null }
-
-
-    Examples:
-      | responseCode | paths         | method | match                                                                                    |
-      | 204          | ''            | GET    | ["response.length == 0", "payload != ''"]                                                |
-      | 201          | 'process/save'| POST   | ["payload != ''", "payload != ''"]                                                       |
-      | 200          | ''            | GET    | ["each response contains FindAllSchema "," response[0].reference == postBody.reference"] |

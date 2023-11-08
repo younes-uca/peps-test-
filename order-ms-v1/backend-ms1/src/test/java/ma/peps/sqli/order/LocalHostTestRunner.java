@@ -6,14 +6,16 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class LocalHostTestRunner {
 
-/*
+
     @BeforeAll
     public static void beforeAll() {
         System.setProperty("karate.env", "localhost");
     }
-*/
 
-
+    @Karate.Test
+    Karate SadOrderDuplicate() {
+        return Karate.run("test/SadOrderTest").tags("duplicate").relativeTo(getClass());
+    }
 
     @Karate.Test
     Karate HappyOrderDelete() {
