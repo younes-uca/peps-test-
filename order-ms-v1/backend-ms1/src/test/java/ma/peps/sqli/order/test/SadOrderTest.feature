@@ -1,7 +1,7 @@
 Feature: MS orderBoutique Tests
 
   Background:
-    * url 'http://localhost:8036/api/admin/orderBoutique/'
+    * url baseUrl
     * header Content-Type = 'application/json'
 
     * def postBody = read('../data/Save.json')
@@ -15,24 +15,20 @@ Feature: MS orderBoutique Tests
     * postBody.reference = uniqueId
     * def payload = ("<method>" == "POST") ? postBody : {}
     * def res = { pass: true, message: null }
+    * def order_boutique_count = db.readValue('select count(*) FROM `peps-order`.order_boutique')
+    * def order_line_count = db.readValue('select count(*) FROM `peps-order`.order_line')
 
     * path <paths>
     * request payload
     * method <method>
     * status <responseCode>
-    * eval if("<method>" == "GET" && <match> == "set") respLength = response.length
-    * eval if("<method>" == "GET" && <match> != "set") responseLength = respLength
-    * eval if("<method>" == "GET" && <match> != "set") karate.log(responseLength)
-    * eval if("<method>" == "GET" && <match> != "set") res = karate.match(<match>)
-    * match res == { pass: true, message: null }
+    * eval if(<index>==2 && order_boutique_count != db.readValue('select count(*) FROM `peps-order`.order_boutique')) karate.fail("order_boutique count values are different")
+    * eval if(<index>==2 && order_line_count != db.readValue('select count(*) FROM `peps-order`.order_line')) karate.fail("order_line count values are different")
 
     Examples:
-      | responseCode | paths          | method | ref    | match                           |
-      | 201          | 'process/save' | POST   | uuid   | ""                              |
-      | 200          | ''             | GET    | uuid   | "set"                           |
-      | 412          | 'process/save' | POST   | uuid   | ""                              |
-      | 200          | ''             | GET    | uuid   | "responseLength == response.length" |
-
+      | index | responseCode | paths          | method |
+      | 1     | 201          | 'process/save' | POST   |
+      | 2     | 412          | 'process/save' | POST   |
 
 
   Scenario: Fail - GetByID Not Found
