@@ -3,7 +3,6 @@ function fn() {
     var config = {};
 
     var env = karate.env; // get java system property 'karate.env'
-    karate.log('karate.env system property was:', env);
     if (!env) {
         env = 'dev'; // a custom 'intelligent' default
         config.baseUrl = 'http://localhost:8036/api/admin/orderBoutique/';

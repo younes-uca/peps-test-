@@ -40,6 +40,10 @@ public class DbUtils {
     public List<Map<String, Object>> readRows(String query) {
         return jdbc.queryForList(query);
     }
+    public void cleanUp() {
+        jdbc.update("DELETE FROM `peps-order`.order_line");
+        jdbc.update("DELETE FROM `peps-order`.order_boutique");
+    }
 
 }
 

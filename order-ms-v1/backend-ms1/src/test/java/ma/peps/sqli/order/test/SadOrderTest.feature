@@ -1,6 +1,7 @@
 Feature: MS orderBoutique Tests
 
   Background:
+    * call read('db_cleaner.js')
     * url baseUrl
     * header Content-Type = 'application/json'
 
@@ -10,25 +11,24 @@ Feature: MS orderBoutique Tests
 
 
 
+
   @duplicate
-  Scenario Outline: POST Order Boutique Twice with same reference
+  Scenario Outline: POST Order Boutique Twice with same reference - expect <responseCode> as response code
     * postBody.reference = uniqueId
-    * def payload = ("<method>" == "POST") ? postBody : {}
-    * def res = { pass: true, message: null }
     * def order_boutique_count = db.readValue('select count(*) FROM `peps-order`.order_boutique')
     * def order_line_count = db.readValue('select count(*) FROM `peps-order`.order_line')
 
-    * path <paths>
-    * request payload
-    * method <method>
+    * path 'process/save'
+    * request postBody
+    * method POST
     * status <responseCode>
-    * eval if(<index>==2 && order_boutique_count != db.readValue('select count(*) FROM `peps-order`.order_boutique')) karate.fail("order_boutique count values are different")
-    * eval if(<index>==2 && order_line_count != db.readValue('select count(*) FROM `peps-order`.order_line')) karate.fail("order_line count values are different")
+    * eval if(__num==1 && order_boutique_count != db.readValue('select count(*) FROM `peps-order`.order_boutique')) karate.fail("order_boutique count values are different")
+    * eval if(__num==1 && order_line_count != db.readValue('select count(*) FROM `peps-order`.order_line')) karate.fail("order_line count values are different")
 
     Examples:
-      | index | responseCode | paths          | method |
-      | 1     | 201          | 'process/save' | POST   |
-      | 2     | 412          | 'process/save' | POST   |
+      | responseCode |
+      | 201          |
+      | 412          |
 
 
   Scenario: Fail - GetByID Not Found
