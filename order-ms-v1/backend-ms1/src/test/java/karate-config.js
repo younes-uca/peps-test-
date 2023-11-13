@@ -17,7 +17,8 @@ function fn() {
         config.datasource = { username: '', password: '', url: '', driverClassName: 'com.mysql.cj.jdbc.Driver' } // TODO
     }
 
-    config.baseUrl = config.rootUrl + 'api/admin/orderBoutique/';
+    config.adminUrl = config.rootUrl + 'api/admin/';
+    config.orderBoutiqueUrl = config.adminUrl + 'orderBoutique/';
 
     common = karate.callSingle('classpath:common.feature', config);
     config.uniqueId = common.uniqueId
@@ -25,8 +26,8 @@ function fn() {
     config.env = env;
 
     karate.log('karate.env =', karate.env);
-    karate.log('config.baseUrl =', config.rootUrl);
-    karate.log('config.baseUrl =', config.baseUrl);
+    karate.log('config.adminUrl =', config.adminUrl);
+    karate.log('config.orderBoutiqueUrl =', config.orderBoutiqueUrl);
     // don't waste time waiting for a connection or if servers don't respond within 5 seconds
     karate.configure('connectTimeout', 5000);
     karate.configure('readTimeout', 5000);
