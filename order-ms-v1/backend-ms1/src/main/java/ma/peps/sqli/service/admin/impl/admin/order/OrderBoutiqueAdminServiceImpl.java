@@ -1,4 +1,4 @@
-package ma.peps.sqli.service.core.facade.impl.admin.order;
+package ma.peps.sqli.service.admin.impl.admin.order;
 
 
 import ma.peps.sqli.bean.core.order.OrderBoutique;

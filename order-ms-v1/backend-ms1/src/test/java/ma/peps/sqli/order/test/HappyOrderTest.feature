@@ -7,7 +7,7 @@ Feature: MS orderBoutique
 
     * def postBody = read('../data/Save.json')
     * def uuid = function() { return '' + java.util.UUID.randomUUID(); }
-    * postBody.reference = uuid()
+    #* postBody.reference = uuid()
 
 
 
