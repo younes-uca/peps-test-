@@ -13,7 +13,7 @@ public class DevTestRunner {
     }
 
     @Karate.Test
-    Karate HappyOrderDelete() {
+    Karate HappyAppTest() {
         return Karate.run("test/HappyAppTest").tags("CheckAppUp").relativeTo(getClass());
     }
 

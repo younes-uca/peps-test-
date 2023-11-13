@@ -1,7 +1,7 @@
 Feature: APP Test
 
   Background:
-    * url 'http://localhost:8036/actuator/health'
+    * url actuatorUrl
     * header Content-Type = 'application/json'
 
 

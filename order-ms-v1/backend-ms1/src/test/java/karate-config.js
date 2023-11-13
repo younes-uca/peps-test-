@@ -17,6 +17,7 @@ function fn() {
         config.datasource = { username: '', password: '', url: '', driverClassName: 'com.mysql.cj.jdbc.Driver' } // TODO
     }
 
+    config.actuatorUrl = config.rootUrl + 'actuator/health';
     config.adminUrl = config.rootUrl + 'api/admin/';
     config.orderBoutiqueUrl = config.adminUrl + 'orderBoutique/';
 

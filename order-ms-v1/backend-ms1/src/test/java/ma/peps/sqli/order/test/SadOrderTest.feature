@@ -2,7 +2,7 @@ Feature: MS orderBoutique Tests
 
   Background:
     * call read('db_cleaner.js')
-    * url baseUrl
+    * url orderBoutiqueUrl
     * header Content-Type = 'application/json'
 
     * def postBody = read('../data/Save.json')
