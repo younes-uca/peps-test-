@@ -8,7 +8,7 @@ Feature: MS orderBoutique
 
     * def postBody = read('../data/Save.json')
     * def uuid = function() { return '' + java.util.UUID.randomUUID(); }
-    #* postBody.reference = uuid()
+    * postBody.reference = uuid()
 
 
 
@@ -19,6 +19,7 @@ Feature: MS orderBoutique
     * postBody.reference = uniqueId
 
     * path <paths>
+    * header Authorization = 'Bearer ' + adminToken
     * request payload
     * method <method>
     * status <responseCode>
@@ -39,6 +40,7 @@ Feature: MS orderBoutique
   @Save
   Scenario: POST Order Boutique * GET it by ID
     * path 'process/save'
+    * header Authorization = 'Bearer ' + adminToken
     * request postBody
     * method POST
     * status 201
@@ -55,6 +57,7 @@ Feature: MS orderBoutique
 
 
     * path 'id', order.id
+    * header Authorization = 'Bearer ' + adminToken
     * method GET
     * status 200
     * match orderLines == response.orderLines
@@ -64,12 +67,14 @@ Feature: MS orderBoutique
   Scenario: DELETE Order Boutique * GET all
 
     * path 'process/save'
+    * header Authorization = 'Bearer ' + adminToken
     * request postBody
     * method POST
     * status 201
 
 
     * path 'process/delete/reference', postBody.reference
+    * header Authorization = 'Bearer ' + adminToken
     * method DELETE
     * def responseCode = (response.errors == '' ? 200 : 412)
     * print "responseCode: " + responseCode + " || responseStatus: " + responseStatus
@@ -79,5 +84,6 @@ Feature: MS orderBoutique
 
 
     * path ''
+    * header Authorization = 'Bearer ' + adminToken
     * method GET
     * assert responseStatus == 204

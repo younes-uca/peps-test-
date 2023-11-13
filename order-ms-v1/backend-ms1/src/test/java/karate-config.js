@@ -6,14 +6,17 @@ function fn() {
     if (!env || env=='dev') {
         env = 'dev'; // a custom 'intelligent' default
         config.rootUrl = 'http://localhost:8036/';
+        config.adminCredentials = {"username": "admin","password": "123"};
         config.datasource = { username: 'root', password: '', url: 'jdbc:mysql://localhost:3306/peps-order', driverClassName: 'com.mysql.cj.jdbc.Driver' }
     }
     if (env == 'int') {
         // over-ride only those that need to be
         config.rootUrl = 'https://stage-host/';
+        config.adminCredentials = {"username": "","password": ""}; // TODO
         config.datasource = { username: '', password: '', url: '', driverClassName: 'com.mysql.cj.jdbc.Driver' } // TODO
     } else if (env == 'e2e') {
         config.rootUrl = 'https://e2e-host/';
+        config.adminCredentials = {"username": "admin","password": ""}; // TODO
         config.datasource = { username: '', password: '', url: '', driverClassName: 'com.mysql.cj.jdbc.Driver' } // TODO
     }
 
@@ -24,6 +27,7 @@ function fn() {
     common = karate.callSingle('classpath:common.feature', config);
     config.uniqueId = common.uniqueId
     config.db = common.db
+    config.adminToken = common.adminToken
     config.env = env;
 
     karate.log('karate.env =', karate.env);

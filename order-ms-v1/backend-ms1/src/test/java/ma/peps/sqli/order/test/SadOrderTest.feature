@@ -19,6 +19,7 @@ Feature: MS orderBoutique Tests
     * def order_line_count = db.readValue('select count(*) FROM `peps-order`.order_line')
 
     * path 'process/save'
+    * header Authorization = 'Bearer ' + adminToken
     * request postBody
     * method POST
     * status <responseCode>
@@ -34,6 +35,7 @@ Feature: MS orderBoutique Tests
   Scenario: Fail - GetByID Not Found
 
     * path 'id', 99999999
+    * header Authorization = 'Bearer ' + adminToken
     * method GET
     * status 404
     * match response.length == 0
@@ -43,6 +45,7 @@ Feature: MS orderBoutique Tests
   Scenario: Fail - POST Order Boutique without Body
 
     * path 'process/save'
+    * header Authorization = 'Bearer ' + adminToken
     * method POST
     * status 400
     * match response.error == "Bad Request"
@@ -52,6 +55,7 @@ Feature: MS orderBoutique Tests
   Scenario Outline: Fail - Save Order with method <method>
 
     * path 'process/save'
+    * header Authorization = 'Bearer ' + adminToken
     * method <method>
     * status 405
     * match response.error == "Method Not Allowed"
