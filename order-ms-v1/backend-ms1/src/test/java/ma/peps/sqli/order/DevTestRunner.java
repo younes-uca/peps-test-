@@ -4,7 +4,7 @@ import com.intuit.karate.junit5.Karate;
 import org.junit.jupiter.api.BeforeAll;
 
 
-public class LocalHostTestRunner {
+public class DevTestRunner {
 
 
     @BeforeAll
@@ -32,7 +32,6 @@ public class LocalHostTestRunner {
     Karate HappyOrderSave() {
         return Karate.run("test/HappyOrderTest").tags("Save").relativeTo(getClass());
     }
-
 
 
 }
