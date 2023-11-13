@@ -17,18 +17,17 @@ function fn() {
         config.datasource = { username: '', password: '', url: '', driverClassName: 'com.mysql.cj.jdbc.Driver' } // TODO
     }
 
-    config.actuatorUrl = config.rootUrl + 'actuator/health';
-    config.adminUrl = config.rootUrl + 'api/admin/';
-    config.orderBoutiqueUrl = config.adminUrl + 'orderBoutique/';
+    config.actuatorUri = config.rootUrl + 'actuator/';
+    config.adminUri = config.rootUrl + 'api/admin/';
+    config.orderBoutiqueUrl = config.adminUri + 'orderBoutique/';
 
     common = karate.callSingle('classpath:common.feature', config);
     config.uniqueId = common.uniqueId
     config.db = common.db
     config.env = env;
 
+    karate.log('config :', config);
     karate.log('karate.env =', karate.env);
-    karate.log('config.adminUrl =', config.adminUrl);
-    karate.log('config.orderBoutiqueUrl =', config.orderBoutiqueUrl);
     // don't waste time waiting for a connection or if servers don't respond within 5 seconds
     karate.configure('connectTimeout', 5000);
     karate.configure('readTimeout', 5000);
