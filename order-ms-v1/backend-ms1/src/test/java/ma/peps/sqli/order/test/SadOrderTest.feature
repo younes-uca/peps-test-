@@ -52,6 +52,15 @@ Feature: MS orderBoutique Tests
 
 
 
+  Scenario: Fail - POST Order Boutique without Authorization
+
+    * path 'process/save'
+    * method POST
+    * status 401
+    * match response.error == "Unauthorized"
+
+
+
   Scenario Outline: Fail - Save Order with method <method>
 
     * path 'process/save'
