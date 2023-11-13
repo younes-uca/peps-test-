@@ -3,7 +3,7 @@ function fn() {
     var config = {};
 
     var env = karate.env; // get java system property 'karate.env'
-    if (!env) {
+    if (!env || env=='dev') {
         env = 'dev'; // a custom 'intelligent' default
         config.rootUrl = 'http://localhost:8036/';
         config.datasource = { username: 'root', password: '', url: 'jdbc:mysql://localhost:3306/peps-order', driverClassName: 'com.mysql.cj.jdbc.Driver' }
@@ -26,8 +26,8 @@ function fn() {
     config.db = common.db
     config.env = env;
 
-    karate.log('config :', config);
     karate.log('karate.env =', karate.env);
+    karate.log('config =', config);
     // don't waste time waiting for a connection or if servers don't respond within 5 seconds
     karate.configure('connectTimeout', 5000);
     karate.configure('readTimeout', 5000);

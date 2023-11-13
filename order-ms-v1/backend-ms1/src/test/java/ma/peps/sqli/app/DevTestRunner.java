@@ -9,12 +9,12 @@ public class DevTestRunner {
 
     @BeforeAll
     public static void beforeAll() {
-        System.setProperty("karate.env", "localhost");
+        System.setProperty("karate.env", "dev");
     }
 
     @Karate.Test
-    Karate HappyAppTest() {
-        return Karate.run("test/HappyAppTest").tags("CheckAppUp").relativeTo(getClass());
+    Karate InfoAppTest() {
+        return Karate.run("test/AppStatusTest").relativeTo(getClass());
     }
 
 

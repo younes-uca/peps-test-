@@ -5,15 +5,13 @@ Feature: APP Test
     * header Content-Type = 'application/json'
 
 
-  @CheckAppUp
   Scenario: Check DB, DiscSpace and Ping UP
     * path 'health'
     * method GET
     * status 200
 
 
-  @CheckInfo
-  Scenario: Check DB, DiscSpace and Ping UP
+  Scenario: Check App Info
     * path 'info'
     * method GET
     * status 200
